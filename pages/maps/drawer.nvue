@@ -1,0 +1,253 @@
+<template>
+    <div class="container">
+		<view class="navigationBar">
+			<view class="menuIcon" @click="hideDrawer">
+				<image class="menuImg" src="../../static/maps_menu_back.png"></image>
+			</view>
+			<text class="navText">数据选择</text>
+		</view>
+		<view class="option">
+			<view class="optionMenu">
+				<view class="title">
+					<!-- <text class="menu" :class="[current==0?'active':'']" @tap="tap(0)" key=0>基础数据</text>
+					<text class="menu" :class="[current==1?'active':'']" @tap="tap(1)" key=1>评价结果数据</text>
+					<text class="menu" :class="[current==2?'active':'']" @tap="tap(2)" key=2>预警模型结果</text> -->
+					<text class="menu" @tap="tap(index)" v-for="(item,index) in list" :key="index" :class="[current==index?'active':'']">{{item.title}}</text>
+					<image v-if="current==0" class="select1" src="../../static/select_menu.png"></image>
+					<image v-if="current==1" class="select2" src="../../static/select_menu.png"></image>
+					<image v-if="current==2" class="select3" src="../../static/select_menu.png"></image>
+				</view>
+				<text class="clear">清除</text>
+			</view>
+			<view class="optionContent">
+				<view class="optionBox">
+					<view class="shadowBox"></view>
+					<view class="tap-label">
+						<swiper :current="current" class="tap-label" vertical="true" @change="getin">
+							<swiper-item key=0>
+								<view>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" checked="true" color="#d1524c"/><text class="content">水质评价结果</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">沉积物评价结果</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">生物多样性结果</text>
+									</label>
+								</view>
+							</swiper-item>
+							<swiper-item key=1>
+								<view>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" checked="true" color="#d1524c"/><text class="content">水质2</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">评价2</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">结果2</text>
+									</label>
+								</view>
+							</swiper-item>
+							<swiper-item key=2>
+								<view>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" checked="true" color="#d1524c"/><text class="content">水质3</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">评价3</text>
+									</label>
+									<label class="checkbox">
+										<checkbox style="transform:scale(0.8)" color="#d1524c"/><text class="content">结果3</text>
+									</label>
+								</view>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+				<text @click="hideDrawer" class="complete">完成</text>
+			</view>
+		</view>
+    </div>
+</template>
+
+<script>
+    export default {
+		data() {
+			return {
+				current: 0,
+				list: [{
+						title: "基础数据",
+					},
+					{
+						title: "评价结果数据",
+					},
+					{
+						title: "预警模型结果",
+					}
+				]
+			}
+		},
+        methods: {
+            hideDrawer() {
+                uni.getCurrentSubNVue().hide('auto')
+            },
+			tap(index) {
+				this.current = index
+			},
+			getin(event){
+				this.current = event.detail.current;
+			}
+        }
+    }
+</script>
+
+<style>
+	.container{
+		align-items:stretch;
+		flex-direction: column;
+		flex: 1;
+		/* position:absolute; 
+		top: 0; 
+		left: 0; 
+		right: 0; 
+		bottom: 0; */ 
+		width: 750rpx;
+	}
+	
+	.navigationBar {
+		flex-direction:row;
+		flex-wrap: nowrap;
+		width: 750rpx;
+		height: 135rpx;
+		background-color: #d1524c;
+	}
+	
+	.menuIcon {
+		padding-top: 70rpx;
+		padding-left: 40rpx;
+	}
+	
+	.menuImg {
+		width: 40rpx;
+		height: 28rpx;
+	}
+	
+	.navText {
+		padding-top: 65rpx;
+		padding-left: 20rpx;
+		font-size: 32rpx;
+		color: #FFFFFF;
+	}
+	
+	.option{
+		flex: 1;
+		flex-direction: row;
+	}
+	
+	.optionMenu{
+		flex-direction: column;
+		justify-content: space-between;
+		width: 250rpx;
+	}
+	
+	.optionContent{
+		flex: 1;
+	}
+	
+	.optionBox{
+		flex: 1;
+		flex-direction: row;
+	}
+	
+	.tap-label{
+		flex: 1;
+	}
+	
+	.shadowBox{
+		width: 35rpx;
+		background-image: linear-gradient(to right, #cdcdcd, #FFFFFF);
+	}
+	
+	.clear{
+		height: 100rpx;
+		border-width: 0;
+		border-radius: 0;
+		line-height: 100rpx;
+		text-align: center;
+		font-size: 32rpx;
+		color: #777777;
+		border-top-width: 1rpx;
+		border-top-color: #C0C0C0;
+	}
+	
+	.complete{
+		height: 100rpx;
+		border-width: 0;
+		border-radius: 0;
+		line-height: 100rpx;
+		text-align: center;
+		font-size: 32rpx;
+		color: #FFFFFF;
+		background-color: #d1524c;
+	}
+	
+	.menu{
+		font-size: 30rpx;
+		color: #333333;
+		padding-top: 30rpx;
+		padding-bottom: 30rpx;
+		padding-left: 40rpx;
+		border-bottom-width: 1rpx;
+		border-bottom-color: #C0C0C0;
+	}
+	
+	.active{
+		color: #d1524c;
+	}
+	
+	.checkbox{
+		flex-direction: row;
+		align-items: center;
+		border-bottom-width: 1rpx;
+		border-bottom-color: #C0C0C0;
+	}
+	
+	.content{
+		flex: 1;
+		font-size: 30rpx;
+		color: #333333;
+		padding-top: 30rpx;
+		padding-bottom: 30rpx;
+	}
+	
+	.addcolor{
+		color: #d1524c;
+	}
+	
+	.select1{
+		position: fixed;
+		left: 225rpx;
+		top: 135rpx;
+		width: 60rpx;
+		height: 100rpx;
+	}
+	
+	.select2{
+		position: fixed;
+		left: 225rpx;
+		top: 230rpx;
+		width: 60rpx;
+		height: 100rpx;
+	}
+	
+	.select3{
+		position: fixed;
+		left: 225rpx;
+		top: 330rpx;
+		width: 60rpx;
+		height: 100rpx;
+	}
+	
+</style>
